@@ -12,6 +12,12 @@ orders_data_path = str(Path(__file__).resolve().parent / 'north_data' / 'orders_
 conn = psycopg2.connect(database='north', user='postgres', password=os.getenv("PSQL_PASS"))
 
 
+def main():
+    fill_employees_data(path=employees_data_path)
+    fill_customers_data(path=customers_data_path)
+    fill_orders_data(path=orders_data_path)
+
+
 def fill_employees_data(path):
     with open(path) as file:
         reader = csv.reader(file)
@@ -47,8 +53,6 @@ def fill_orders_data(path):
 
 if __name__ == "__main__":
     try:
-        fill_employees_data(path=employees_data_path)
-        fill_customers_data(path=customers_data_path)
-        fill_orders_data(path=orders_data_path)
+        main()
     finally:
         conn.close()
